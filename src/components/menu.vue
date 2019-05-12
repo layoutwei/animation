@@ -8,8 +8,7 @@
                     :class="{active : active == key}"
                     :title="item.describe" :style="{
                         animationDelay: key * .02 + 's'
-                    }" @click="active=key"
-                    v-if="item.show">
+                    }" @click="itemClick(key, item.componentName)">
                         {{item.name}}
                     </li>
             </transition-group>
@@ -26,82 +25,33 @@
                     {
                         name: '测边进入',
                         className: '',
-                        show: false,
+                        componentName: 'fadeSlide',
                         describe: '侧边进入，渐变'
                     },
                     {
-                        name: '渐变显示',
+                        name: '渐变透明',
                         className: '',
-                        show: false,
-                        describe: ''
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },{
-                        name: '测边进入',
-                        className: '',
-                        show: false,
-                        describe: '侧边进入，渐变'
-                    },
+                        componentName: 'fadeIn',
+                        describe: '渐变透明'
+                    }
                 ]
+            }
+        },
+        methods: {
+            itemClick (key, cname) {
+                this.active = key
+                this.$emit('animationChange', cname)
             }
         }
     }
 </script>
 <style lang="less" scope="scope">
-    .slide-fade-enter-active {
-        animation-name: slide-left;
-        animation-duration: .3s;
-        animation-delat: 1.5s;
-    }
-    .active (@color: #333) {
+    .active (@color: cornflowerblue) {
+        width: 155px;
+        background: linear-gradient(#fff, #ccc);
         text-decoration: underline;
-        color:cornflowerblue;
-        animation: slide-hover .1s;
-        animation-fill-mode: forwards;
         color: @color;
+        transform: translate(-5px, 0);
     }
     .menu {
         position: fixed;
@@ -118,24 +68,38 @@
             padding: 0;
             overflow-x: hidden;
             overflow-y: auto;
+            .active {
+                .active(rgb(31, 12, 204))
+            };
             li {
                 list-style: none;
                 margin: 0;
                 text-indent: 10px;
-                font-size: 14x;
+                font-size: 13x;
                 height: 30px;
                 width: 100%;
                 line-height: 30px;
                 cursor: pointer;
                 user-select: none;
                 overflow: hidden;
+                animation: slide-left;
+                animation-duration: .3s;
+                animation-fill-mode: forwards;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                margin-left: 150px;
                 &:hover {
-                    
-                    
+                    .active()
                 }
             };
+        }
+    }
+    @keyframes slide-hover {
+        from {
+            margin-left: 0
+        }
+        to {
+            margin-left: 0;
         }
     }
     @keyframes slide-left {
@@ -146,16 +110,5 @@
             margin-left: 0;
         }
     }
-    @keyframes slide-hover {
-        from {
-            width: 150px;
-            transform: translate(0px, 0);
-            margin-left: 0;
-        }
-        to {
-            width: 155px;
-            transform: translate(-5px, 0);
-            margin-left: 0;
-        }
-    }
+    
 </style>
